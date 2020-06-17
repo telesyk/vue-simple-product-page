@@ -80,6 +80,7 @@
                 <img :src="product.assets" alt="Image">
               </figure>
             </div>
+
             <div class="media-content">
               <div class="content">
                 <h1 class="title">{{ product.title }}</h1>
@@ -93,9 +94,10 @@
                       <span>{{ activeTab }}</span>
                     </div>
                     <div class="level-right">
-                      <span class="tag is-primary is-light" v-if="product.inventory > 10">In Stock</span>
-                      <span class="tag is-warning" v-else-if="product.inventory<=10 && product.inventory > 0">Almost sold</span>
-                      <span class="tag is-link" v-else>Out of Stock</span>
+                      <span 
+                        class="tag"
+                        :class="stockLabel"
+                      >{{ product.label }}</span>
                       <span class="tag is-danger" v-show="product.onSale">On Sale</span>
                     </div>
                   </div>
@@ -149,6 +151,7 @@
                       <button 
                         class="button is-primary"
                         @click="incrementCart"
+                        :disabled="!product.inventory"
                       >Add to cart</button>
                     </div>
                     <div class="level-right">
@@ -164,7 +167,6 @@
                     </div>
                   </div>
                 </article>
-
                 
               </div>
             </div>

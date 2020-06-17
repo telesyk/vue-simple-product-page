@@ -9,6 +9,7 @@ new Vue({
       assets: 'https://images.vans.com/is/image/Vans/XRZHTG-HERO?$583x583$',
       inventory: 10,
       onSale: true,
+      label: '',
       details: [
         '80 cotton', '20% polyester', 'Gender-neutral'
       ],
@@ -52,6 +53,19 @@ new Vue({
     activeTab() {
       const activeTab = this.product.tabs.find( tab => !!tab.active);
       return activeTab.title;
+    },
+
+    stockLabel() {
+      if (this.product.inventory > 10) {
+        this.product.label = 'In Stock';
+        return 'is-primary is-light';
+      } else if (this.product.inventory<=10 && this.product.inventory > 0) {
+        this.product.label = 'Almost sold';
+        return 'is-warning';
+      } else {
+        this.product.label = 'Out of Stock';
+        return 'is-link';
+      }
     }
   },
 
@@ -63,7 +77,7 @@ new Vue({
         this.cart = this.product.inventory;
       }
     },
-    
+
     decrementCart() {
       if (this.cart != 0) {
         this.cart -= 1;
