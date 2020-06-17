@@ -1,0 +1,10 @@
+{
+  "name": "vue-page-product",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bulma": "^0.9.0",
+    "vue": "^2.6.11"
+  }
+}

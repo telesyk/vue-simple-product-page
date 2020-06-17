@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="main.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      </a>
+  
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          Home
+        </a>
+  
+        <a class="navbar-item">
+          Documentation
+        </a>
+  
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More
+          </a>
+  
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              About
+            </a>
+            <a class="navbar-item">
+              Jobs
+            </a>
+            <a class="navbar-item">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app">
+    <section class="section">
+      <div class="container">
+        
+        <div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-1by1">
+                <img :src="product.assets" alt="Image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <h1 class="title">{{ product.title }}</h1>
+                <p>
+                  {{ product.description }}
+                </p>
+                
+                <article class="panel is-primary">
+                  <div class="level panel-heading">
+                    <div class="level-left">
+                      <span>{{ activeTab }}</span>
+                    </div>
+                    <div class="level-right">
+                      <span class="tag is-primary is-light" v-if="product.inventory > 10">In Stock</span>
+                      <span class="tag is-warning" v-else-if="product.inventory<=10 && product.inventory > 0">Almost sold</span>
+                      <span class="tag is-link" v-else>Out of Stock</span>
+                      <span class="tag is-danger" v-show="product.onSale">On Sale</span>
+                    </div>
+                  </div>
+                  <p class="panel-tabs">
+                    <a 
+                      v-for="tab in product.tabs"
+                      :key="tab.id"
+                      :class="{'is-active': tab.active}"
+                    >{{ tab.title }}</a>
+                  </p>
+                  
+                  <a 
+                    class="panel-block"
+                    v-for="detail in product.details"
+                  >
+                    <span class="panel-icon">
+                      <i class="fas fa-caret-right" aria-hidden="true"></i>
+                    </span>
+                    {{ detail }}
+                  </a>
+
+                  <hr>
+
+                  <div class="level">
+                    <div class="level-left">
+                      <button 
+                        class="button"
+                        v-for="variant in product.variants"
+                        :key="variant.id"
+                        :style="{backgroundColor: variant.color}"
+                        @mouseover="updateProductImage(variant.image)"
+                      >
+                        *
+                      </button>
+                    </div>
+                    <div class="level-right">
+                      <button
+                        class="button"
+                        v-for="size in product.sizes"
+                        :key="size.id"
+                      >
+                        {{ size.value }}
+                      </button>
+                    </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="level">
+                    <div class="level-left">
+                      <button 
+                        class="button is-primary"
+                        @click="incrementCart"
+                      >Add to cart</button>
+                    </div>
+                    <div class="level-right">
+                      <button 
+                        class="button"
+                        @click="incrementCart"
+                      >+</button>
+                      <button 
+                        class="button"
+                        @click="decrementCart"
+                      >-</button>
+                      <p class="button">Cart ({{ cart }})</p>
+                    </div>
+                  </div>
+                </article>
+
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
