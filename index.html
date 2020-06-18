@@ -77,41 +77,48 @@
           <article class="media">
             <div class="media-left">
               <figure class="image is-1by1">
-                <img :src="product.assets" alt="Image">
+                <img :src="image" alt="Image">
               </figure>
             </div>
 
             <div class="media-content">
               <div class="content">
-                <h1 class="title">{{ product.title }}</h1>
-                <p>
-                  {{ product.description }}
-                </p>
+                <h1 class="title">{{ title }}</h1>
+                <p>{{ description }}</p>
                 
                 <article class="panel is-primary">
                   <div class="level panel-heading">
                     <div class="level-left">
                       <span>{{ activeTab }}</span>
                     </div>
+
                     <div class="level-right">
                       <span 
                         class="tag"
-                        :class="stockLabel"
-                      >{{ product.label }}</span>
-                      <span class="tag is-danger" v-show="product.onSale">On Sale</span>
+                        :class="stockLabelClass"
+                      >
+                        {{ stockLabel }}
+                      </span>
+                      <span 
+                        class="tag is-danger" 
+                        v-show="onSale"
+                      >On Sale</span>
                     </div>
                   </div>
+
                   <p class="panel-tabs">
                     <a 
-                      v-for="tab in product.tabs"
+                      v-for="tab in tabs"
                       :key="tab.id"
                       :class="{'is-active': tab.active}"
-                    >{{ tab.title }}</a>
+                    >
+                      {{ tab.title }}
+                    </a>
                   </p>
                   
                   <a 
                     class="panel-block"
-                    v-for="detail in product.details"
+                    v-for="detail in details"
                   >
                     <span class="panel-icon">
                       <i class="fas fa-caret-right" aria-hidden="true"></i>
@@ -125,21 +132,21 @@
                     <div class="level-left">
                       <button 
                         class="button"
-                        v-for="variant in product.variants"
+                        :class="variant.color"
+                        v-for="(variant, index) in variants"
                         :key="variant.id"
-                        :style="{backgroundColor: variant.color}"
-                        @mouseover="updateProductImage(variant.image)"
+                        @click="updateProduct(index)"
                       >
-                        *
+                        <i class="fas fa-tint"></i>
                       </button>
                     </div>
+
                     <div class="level-right">
                       <button
                         class="button"
-                        v-for="size in product.sizes"
-                        :key="size.id"
+                        v-for="size in sizes"
                       >
-                        {{ size.value }}
+                        {{ size }}
                       </button>
                     </div>
                   </div>
@@ -151,9 +158,10 @@
                       <button 
                         class="button is-primary"
                         @click="incrementCart"
-                        :disabled="!product.inventory"
+                        :disabled="!inventory"
                       >Add to cart</button>
                     </div>
+
                     <div class="level-right">
                       <button 
                         class="button"
