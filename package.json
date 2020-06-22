@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "parcel build index.html -d docs",
+    "serve": "parcel index.html"
+  },
   "dependencies": {
     "bulma": "^0.9.0",
     "vue": "^2.6.11",
@@ -10,6 +14,7 @@
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.1.2",
+    "cssnano": "^4.1.10",
     "vue-template-compiler": "^2.6.11"
   }
 }
