@@ -45,15 +45,13 @@
                   </a>
                 </p>
                 
-                <a 
+                <Details
                   class="panel-block"
                   v-for="detail in details"
+                  :key="detail"
                 >
-                  <span class="panel-icon">
-                    <i class="fas fa-caret-right" aria-hidden="true"></i>
-                  </span>
                   {{ detail }}
-                </a>
+                </Details>
 
                 <hr>
 
@@ -74,6 +72,7 @@
                     <button
                       class="button"
                       v-for="size in sizes"
+                      :key="size"
                     >
                       {{ size }}
                     </button>
@@ -117,8 +116,14 @@
 </template>
 
 <script>
+import Details from './components/Details';
+
 export default {
   name: 'App',
+
+  components: {
+    Details,
+  },
 
   data() {
     return {
