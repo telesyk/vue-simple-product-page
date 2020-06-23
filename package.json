@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "parcel build index.html -d docs",
-    "serve": "parcel index.html"
+    "dev": "parcel index.html"
   },
   "dependencies": {
     "bulma": "^0.9.0",
