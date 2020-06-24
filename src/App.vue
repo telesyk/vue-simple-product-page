@@ -45,37 +45,36 @@
                   </a>
                 </p>
                 
-                <Details
+                <Detail
                   class="panel-block"
-                  v-for="detail in details"
+                  v-for="detail in Detail"
                   :key="detail"
                 >
                   {{ detail }}
-                </Details>
+                </Detail>
 
                 <hr>
 
                 <div class="level">
                   <div class="level-left">
-                    <button 
-                      class="button"
-                      :class="variant.color"
+                    <Button
                       v-for="(variant, index) in variants"
                       :key="variant.id"
-                      @click="updateProduct(index)"
+                      :class="variant.color + ' is-small'"
+                      @onClick="updateProduct(index)"
                     >
                       <i class="fas fa-tint"></i>
-                    </button>
+                    </Button>
                   </div>
 
                   <div class="level-right">
-                    <button
-                      class="button"
+                    <Button
                       v-for="size in sizes"
                       :key="size"
+                      :class="'is-small'"
                     >
                       {{ size }}
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
@@ -83,25 +82,29 @@
 
                 <div class="level">
                   <div class="level-left">
-                    <button 
+                    <!-- <button 
                       class="button is-primary"
                       @click="incrementCart"
                       :disabled="!inventory"
-                    >Add to cart</button>
+                    >Add to cart</button> -->
                   </div>
 
                   <div class="level-right">
-                    <button 
-                      class="button"
-                      @click="incrementCart"
-                      :disabled="!inventory"
-                    >+</button>
-                    <button 
-                      class="button"
-                      @click="decrementCart"
-                      :disabled="!inventory"
-                    >-</button>
-                    <p class="button">Cart ({{ cart }})</p>
+                    <div class="buttons are-small">
+                      <Button
+                        @onClick="decrementCart"
+                        :disabled="!inventory"
+                        v-text="'-'"
+                      ></Button>
+                      <Button
+                        :class="'is-white'"
+                      >{{ cart }}</Button>
+                      <Button
+                        @onClick="incrementCart"
+                        :disabled="!inventory"
+                        v-text="'+'"
+                      ></Button>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -116,13 +119,15 @@
 </template>
 
 <script>
-import Details from './components/Details';
+import Detail from './components/Detail';
+import Button from './components/Button';
 
 export default {
   name: 'App',
 
   components: {
-    Details,
+    Detail,
+    Button,
   },
 
   data() {
@@ -133,7 +138,7 @@ export default {
       selectedVariant: 0,
       onSale: true,
       stockLabel: '',
-      details: [
+      Detail: [
         '80 cotton', '20% polyester', 'Gender-neutral'
       ],
       variants: [
@@ -155,7 +160,7 @@ export default {
       tabs: [
         {
           id: 112,
-          title: 'Details',
+          title: 'Detail',
           active: true,
         }, {
           id: 113,
