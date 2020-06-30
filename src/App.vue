@@ -82,25 +82,23 @@
 
                 <div class="level">
                   <div class="level-left">
-                    <!-- <button 
-                      class="button is-primary"
-                      @click="incrementCart"
+                    <!-- <Button 
+                      :class="'is-primary'"
                       :disabled="!inventory"
-                    >Add to cart</button> -->
+                      @onClick="addProduct"
+                    >Add to cart</Button> -->
                   </div>
 
                   <div class="level-right">
                     <div class="buttons are-small">
                       <Button
-                        @onClick="decrementCart"
+                        @onClick="removeProduct"
                         :disabled="!inventory"
                         v-text="'-'"
                       ></Button>
+                      <Button>Cart ({{ cart.length }})</Button>
                       <Button
-                        :class="'is-white'"
-                      >{{ cart }}</Button>
-                      <Button
-                        @onClick="incrementCart"
+                        @onClick="addProduct"
                         :disabled="!inventory"
                         v-text="'+'"
                       ></Button>
@@ -132,7 +130,7 @@ export default {
 
   data() {
     return {
-      cart: 0,
+      cart: [],
       title: 'Socks',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.',
       selectedVariant: 0,
@@ -206,21 +204,29 @@ export default {
   },
 
   methods: {
-    incrementCart() {
-      if (this.cart < this.inventory) {
-        this.cart += 1;
-      } else {
-        this.cart = this.inventory;
+    addProduct(id) {
+      id = this.variants[this.selectedVariant].id;
+
+      if (this.cart.length < this.inventory) {
+        this.cart.push(id);
       }
     },
 
-    decrementCart() {
-      if (this.cart != 0) {
-        this.cart -= 1;
-      } else {
-        this.cart = 0;
+    removeProduct(id) {
+      id = this.variants[this.selectedVariant].id;
+
+      if (this.cart.length != 0) {
+        this.cart.pop(id);
       }
     },
+
+    // removeProduct() {
+    //   if (this.cart != 0) {
+    //     this.cart -= 1;
+    //   } else {
+    //     this.cart = 0;
+    //   }
+    // },
 
     updateProduct(index) {
       this.selectedVariant = index;
