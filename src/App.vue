@@ -12,8 +12,8 @@
 
           <div class="media-content">
             <div class="content">
-              <h1 class="title">{{ title }}</h1>
-              <p>{{ description }}</p>
+              <Title>{{ title }}</Title>
+              <Description>{{ description }}</Description>
               
               <article class="panel is-primary">
                 <div class="level panel-heading">
@@ -45,13 +45,11 @@
                   </a>
                 </p>
                 
-                <Detail
-                  class="panel-block"
+                <Details
                   v-for="detail in Detail"
                   :key="detail"
-                >
-                  {{ detail }}
-                </Detail>
+                  :detail="detail"
+                ></Details>
 
                 <hr>
 
@@ -117,14 +115,18 @@
 </template>
 
 <script>
-import Detail from './components/Detail';
+import Title from './components/Title';
+import Description from './components/Description';
+import Details from './components/Details';
 import Button from './components/Button';
 
 export default {
   name: 'App',
 
   components: {
-    Detail,
+    Details,
+    Title,
+    Description,
     Button,
   },
 
@@ -132,7 +134,7 @@ export default {
     return {
       cart: [],
       title: 'Socks',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.',
+      description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
       selectedVariant: 0,
       onSale: true,
       stockLabel: '',
