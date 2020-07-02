@@ -5,107 +5,29 @@
       <div class="box">
         <article class="media">
           <div class="media-left">
-            <figure class="image is-1by1">
-              <img :src="image" alt="Image">
-            </figure>
+            <ProductMedia
+              :imageSrc="image"
+            ></ProductMedia>
           </div>
 
           <div class="media-content">
-            <div class="content">
-              <Title>{{ title }}</Title>
-              <Description>{{ description }}</Description>
-              
-              <article class="panel is-primary">
-                <div class="level panel-heading">
-                  <div class="level-left">
-                    <span>{{ activeTab }}</span>
-                  </div>
-
-                  <div class="level-right">
-                    <span 
-                      class="tag"
-                      :class="productLabel"
-                    >
-                      {{ stockLabel }}
-                    </span>
-                    <span 
-                      class="tag is-danger" 
-                      v-show="onSale"
-                    >On Sale</span>
-                  </div>
-                </div>
-
-                <p class="panel-tabs">
-                  <a 
-                    v-for="tab in tabs"
-                    :key="tab.id"
-                    :class="{'is-active': tab.active}"
-                  >
-                    {{ tab.title }}
-                  </a>
-                </p>
-                
-                <Details
-                  v-for="detail in Detail"
-                  :key="detail"
-                  :detail="detail"
-                ></Details>
-
-                <hr>
-
-                <div class="level">
-                  <div class="level-left">
-                    <Button
-                      v-for="(variant, index) in variants"
-                      :key="variant.id"
-                      :class="variant.color + ' is-small'"
-                      @onClick="updateProduct(index)"
-                    >
-                      <i class="fas fa-tint"></i>
-                    </Button>
-                  </div>
-
-                  <div class="level-right">
-                    <Button
-                      v-for="size in sizes"
-                      :key="size"
-                      :class="'is-small'"
-                    >
-                      {{ size }}
-                    </Button>
-                  </div>
-                </div>
-
-                <hr>
-
-                <div class="level">
-                  <div class="level-left">
-                    <!-- <Button 
-                      :class="'is-primary'"
-                      :disabled="!inventory"
-                      @onClick="addProduct"
-                    >Add to cart</Button> -->
-                  </div>
-
-                  <div class="level-right">
-                    <div class="buttons are-small">
-                      <Button
-                        @onClick="removeProduct"
-                        :disabled="!inventory"
-                        v-text="'-'"
-                      ></Button>
-                      <Button>Cart ({{ cart.length }})</Button>
-                      <Button
-                        @onClick="addProduct"
-                        :disabled="!inventory"
-                        v-text="'+'"
-                      ></Button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              
-            </div>
+            <ProductContent
+              :productCart="cart"
+              :productTitle="title"
+              :productSizes="sizes"
+              :productDetails="details"
+              :productVariants="variants"
+              :productInventory="inventory"
+              :productLabelClass="productLabel"
+              :productDescription="description"
+              :productSelectedVariant="selectedVariant"
+              :tabs="tabs"
+              :activeTabName="activeTab"
+              :stockLabel="stockLabel"
+              :onSaleBoolean="onSale"
+              @handleAddProduct="addProduct"
+              @handleRemoveProduct="removeProduct"
+            ></ProductContent>
           </div>
         </article>
       </div>
@@ -115,19 +37,15 @@
 </template>
 
 <script>
-import Title from './components/Title';
-import Description from './components/Description';
-import Details from './components/Details';
-import Button from './components/Button';
+import ProductMedia from './components/ProductMedia';
+import ProductContent from './components/ProductContent';
 
 export default {
   name: 'App',
 
   components: {
-    Details,
-    Title,
-    Description,
-    Button,
+    ProductMedia,
+    ProductContent,
   },
 
   data() {
@@ -138,10 +56,17 @@ export default {
       selectedVariant: 0,
       onSale: true,
       stockLabel: '',
-      Detail: [
+      details: [
         '80 cotton', '20% polyester', 'Gender-neutral'
       ],
       variants: [
+        {
+          id: 2233,
+          color: 'is-success',
+          quantity: 17,
+          image: 'https://media.mysockfactory.ch/1313-large_default/plain-green-socks.jpg',
+          sizes: ['sm', 'md', 'lg', 'xl'],
+        },
         {
           id: 2234,
           color: 'is-default',
@@ -160,7 +85,7 @@ export default {
       tabs: [
         {
           id: 112,
-          title: 'Detail',
+          title: 'Details',
           active: true,
         }, {
           id: 113,
@@ -222,17 +147,24 @@ export default {
       }
     },
 
-    // removeProduct() {
-    //   if (this.cart != 0) {
-    //     this.cart -= 1;
-    //   } else {
-    //     this.cart = 0;
-    //   }
-    // },
+    // updateProduct(event) {
 
-    updateProduct(index) {
-      this.selectedVariant = index;
-    },
+    //   const elements = document.querySelectorAll('button[data-id]:not(.is-active)');
+    //   // console.log(element.getAttribute('data-id'));
+    //   // console.log(event.target);
+    //   elements.forEach(el => {
+    //       el.addEventListener('click', (e) => {
+    //         console.log(e.currentTarget);
+    //       })
+    //   });
+
+    //   // console.log(this.$el.querySelector('button[data-id]'));
+
+    //   // e.preventDefault();
+
+    //   // this.selectedVariant = parseInt(element.getAttribute('data-id'));
+    //   // console.log(this.selectedVariant);
+    // },
   }
 }
 </script>
