@@ -22,7 +22,6 @@
               :productDescription="description"
               :productSelectedVariant="selectedVariant"
               :tabs="tabs"
-              :activeTabName="activeTab"
               :stockLabel="stockLabel"
               :onSaleBoolean="onSale"
               @handleAddProduct="addProduct"
@@ -86,22 +85,15 @@ export default {
         {
           id: 112,
           title: 'Details',
-          active: true,
         }, {
           id: 113,
           title: 'Color & Size',
-          active: false,
         }
       ],
     }
   },
 
   computed: {
-    activeTab() {
-      const activeTab = this.tabs.find( tab => !!tab.active);
-      return activeTab.title;
-    },
-
     image() {
       return this.variants[this.selectedVariant].image;
     },

@@ -31,25 +31,16 @@
 
       <p class="panel-tabs">
         <a 
-          v-for="tab in tabs"
+          v-for="(tab, index) in tabs"
           :key="tab.id"
-          :class="{'is-active': tab.active}"
+          :class="[index === activeTab ? 'is-active' : '']"
+          @click="handleActiveTab(index)"
         >
           {{ tab.title }}
         </a>
       </p>
-      
-      <TabDetails
-        :productDetails="productDetails"
-      ></TabDetails>
 
-      <hr>
-
-      <TabColorSize
-        :productSizes="productSizes"
-        :productVariants="productVariants"
-        :productSelectedVariant="productSelectedVariant"
-      ></TabColorSize>
+      <div v-html="currentTab"></div>
 
       <hr>
 
@@ -132,10 +123,6 @@ export default {
       type: Array,
       required: true,
     },
-    activeTabName: {
-      type: String,
-      required: true,
-    },
     stockLabel: {
       type: String,
       required: true,
@@ -144,16 +131,54 @@ export default {
       type: Boolean,
       required: true,
     },
-    updateProduct: {
-      type: Function,
-    },
+    updateProduct: Function,
     productSelectedVariant: Number,
     productVariants: Array,
     productSizes: Array,
     productDetails: Array,
   },
 
+  data() {
+    return {
+      activeTab: 0,
+    }
+  },
+
+  computed: {
+    activeTabName() {
+      const tab = this.tabs[this.activeTab];
+      return tab.title;
+    },
+
+    currentTab() {
+      switch(this.activeTab) {
+        case 0: 
+          return (`
+            <TabDetails
+              :productDetails="productDetails"
+            ></TabDetails>
+          `);
+          break;
+        case 1:
+          return (`
+            <TabColorSize
+              :productSizes="productSizes"
+              :productVariants="productVariants"
+              :productSelectedVariant="productSelectedVariant"
+            ></TabColorSize>
+          `);
+          break;
+        default:
+          break;
+      }
+    }
+  },
+
   methods: {
+    handleActiveTab(index) {
+      this.activeTab = index;
+    },
+
     handleAddProduct() {
       this.$emit('handleAddProduct');
     },
