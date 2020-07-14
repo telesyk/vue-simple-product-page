@@ -72,11 +72,9 @@
               v-text="'-'"
             ></Button>
 
-            <Button
-              :class="'is-white'"
-            >
-              Cart ({{ productCart.length }})
-            </Button>
+            <span class="button is-white">
+              {{ productCart.length }}
+            </span>
             
             <Button
               @onClick="handleAddProduct"

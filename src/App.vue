@@ -1,41 +1,49 @@
 <template>
-  <section class="section">
-    <div class="container">
-      
-      <div class="box">
-        <article class="media">
-          <div class="media-left">
-            <ProductMedia
-              :imageSrc="image"
-            ></ProductMedia>
-          </div>
+  <div class="page">
+    <Navbar
+      :logoSrc="navbar.logo"
+      :logoUrl="navbar.url"
+    ></Navbar>
 
-          <div class="media-content">
-            <ProductContent
-              :productCart="cart"
-              :productTitle="title"
-              :productSizes="sizes"
-              :productDetails="details"
-              :productVariants="variants"
-              :productInventory="inventory"
-              :productLabelClass="productLabel"
-              :productDescription="description"
-              :productSelectedVariant="selectedVariant"
-              :tabs="tabs"
-              :stockLabel="stockLabel"
-              :onSaleBoolean="onSale"
-              @handleAddProduct="addProduct"
-              @handleRemoveProduct="removeProduct"
-            ></ProductContent>
-          </div>
-        </article>
+    <section class="section">
+      <div class="container">
+        
+        <div class="box">
+          <article class="media">
+            <div class="media-left">
+              <ProductMedia
+                :imageSrc="image"
+              ></ProductMedia>
+            </div>
+
+            <div class="media-content">
+              <ProductContent
+                :productCart="cart"
+                :productTitle="title"
+                :productSizes="sizes"
+                :productDetails="details"
+                :productVariants="variants"
+                :productInventory="inventory"
+                :productLabelClass="productLabel"
+                :productDescription="description"
+                :productSelectedVariant="selectedVariant"
+                :tabs="tabs"
+                :stockLabel="stockLabel"
+                :onSaleBoolean="onSale"
+                @handleAddProduct="addProduct"
+                @handleRemoveProduct="removeProduct"
+              ></ProductContent>
+            </div>
+          </article>
+        </div>
+
       </div>
-
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
+import Navbar from './components/Navbar';
 import ProductMedia from './components/ProductMedia';
 import ProductContent from './components/ProductContent';
 
@@ -43,12 +51,17 @@ export default {
   name: 'App',
 
   components: {
+    Navbar,
     ProductMedia,
     ProductContent,
   },
 
   data() {
     return {
+      navbar: {
+        logo: 'https://bulma.io/images/bulma-logo.png',
+        url: 'https://bulma.io',
+      },
       cart: [],
       title: 'Socks',
       description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
