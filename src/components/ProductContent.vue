@@ -40,7 +40,18 @@
         </a>
       </p>
 
-      <div v-html="currentTab"></div>
+      <div v-if="activeTab == 0">
+        <TabDetails
+          :productDetails="productDetails"
+        ></TabDetails>
+      </div>
+      <div v-else-if="activeTab == 1">
+        <TabColorSize
+          :productSizes="productSizes"
+          :productVariants="productVariants"
+          :productSelectedVariant="productSelectedVariant"
+        ></TabColorSize>
+      </div>
 
       <hr>
 
@@ -149,29 +160,6 @@ export default {
       const tab = this.tabs[this.activeTab];
       return tab.title;
     },
-
-    currentTab() {
-      switch(this.activeTab) {
-        case 0: 
-          return (`
-            <TabDetails
-              :productDetails="productDetails"
-            ></TabDetails>
-          `);
-          break;
-        case 1:
-          return (`
-            <TabColorSize
-              :productSizes="productSizes"
-              :productVariants="productVariants"
-              :productSelectedVariant="productSelectedVariant"
-            ></TabColorSize>
-          `);
-          break;
-        default:
-          break;
-      }
-    }
   },
 
   methods: {

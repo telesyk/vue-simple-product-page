@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tab-content">
     <DetailItem
       v-for="detail in productDetails"
       :key="detail"
