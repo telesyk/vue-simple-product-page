@@ -7,35 +7,33 @@
 
     <section class="section">
       <div class="container">
-        
-        <div class="box">
-          <article class="media">
-            <div class="media-left">
-              <ProductMedia
-                :imageSrc="image"
-              ></ProductMedia>
-            </div>
+      
+        <article class="columns">
+          <div class="column product-media">
+            <ProductMedia
+              :imageSrc="image"
+            ></ProductMedia>
+          </div>
 
-            <div class="media-content">
-              <ProductContent
-                :productCart="cart"
-                :productTitle="title"
-                :productSizes="sizes"
-                :productDetails="details"
-                :productVariants="variants"
-                :productInventory="inventory"
-                :productLabelClass="productLabel"
-                :productDescription="description"
-                :productSelectedVariant="selectedVariant"
-                :tabs="tabs"
-                :stockLabel="stockLabel"
-                :onSaleBoolean="onSale"
-                @handleAddProduct="addProduct"
-                @handleRemoveProduct="removeProduct"
-              ></ProductContent>
-            </div>
-          </article>
-        </div>
+          <div class="column product-content">
+            <ProductContent
+              :productCart="cart"
+              :productTitle="title"
+              :productSizes="sizes"
+              :productDetails="details"
+              :productVariants="variants"
+              :productInventory="inventory"
+              :productLabelClass="productLabel"
+              :productDescription="description"
+              :productSelectedVariant="selectedVariant"
+              :tabs="tabs"
+              :stockLabel="stockLabel"
+              :onSaleBoolean="onSale"
+              @handleProductIncrease="productIncrease"
+              @handleProductDecrease="productDecrease"
+            ></ProductContent>
+          </div>
+        </article>
 
       </div>
     </section>
@@ -133,10 +131,19 @@ export default {
         return 'is-link';
       }
     },
+
+    // productCart() {
+    //   const count = this.variants[this.selectedVariant].quantity;
+
+    //   if (count !== 0) {
+
+    //   };
+
+    // },
   },
 
   methods: {
-    addProduct(id) {
+    productIncrease(id) {
       id = this.variants[this.selectedVariant].id;
 
       if (this.cart.length < this.inventory) {
@@ -144,7 +151,7 @@ export default {
       }
     },
 
-    removeProduct(id) {
+    productDecrease(id) {
       id = this.variants[this.selectedVariant].id;
 
       if (this.cart.length != 0) {

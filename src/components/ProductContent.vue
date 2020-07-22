@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content box">
     <Title>
       {{ productTitle }}
     </Title>
@@ -24,8 +24,8 @@
           </span>
           <span 
             class="tag is-danger" 
-            v-show="onSaleBoolean"
-          >On Sale</span>
+            v-show="onSaleBoolean && !!productInventory"
+          >% Sale</span>
         </div>
       </div>
 
@@ -57,18 +57,12 @@
 
       <div class="level">
         <div class="level-left">
-          <!-- <Button 
-            :class="'is-primary'"
-            :disabled="!productInventory"
-            @onClick="addProduct"
-          >Add to cart</Button> -->
-        </div>
-
-        <div class="level-right">
-          <div class="buttons are-small px-2 py-2">
+          <div 
+            class="buttons are-small px-2 py-2"
+            v-show="!!productInventory"
+          >
             <Button
-              @onClick="handleRemoveProduct"
-              :disabled="!productInventory"
+              @onClick="handleProductDecrease"
               v-text="'-'"
             ></Button>
 
@@ -77,10 +71,19 @@
             </span>
             
             <Button
-              @onClick="handleAddProduct"
-              :disabled="!productInventory"
+              @onClick="handleProductIncrease"
               v-text="'+'"
             ></Button>
+          </div>
+        </div>
+
+        <div class="level-right">
+          <div class="buttons px-2 py-2">
+            <Button 
+              :class="'is-primary'"
+              :disabled="!productInventory"
+              @onClick="handleAddProduct"
+            >Add to cart</Button>
           </div>
         </div>
       </div>
@@ -165,16 +168,20 @@ export default {
       this.activeTab = index;
     },
 
-    handleAddProduct() {
-      this.$emit('handleAddProduct');
+    handleProductIncrease() {
+      this.$emit('handleProductIncrease');
     },
 
-    handleRemoveProduct() {
-      this.$emit('handleRemoveProduct');
+    handleProductDecrease() {
+      this.$emit('handleProductDecrease');
     },
 
     handleProductUpdate() {
       this.$emit('handleProductUpdate');
+    },
+
+    handleAddProduct() {
+      alert('Product added to Cart');
     }
   },
 }
