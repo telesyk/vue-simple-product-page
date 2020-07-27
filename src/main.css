@@ -9,3 +9,9 @@ html, body {
   background-color: var(--color-dark);
   color: var(--color-light);
 }
+
+@media screen and (min-width: 1408px) {
+  .container {
+    width: 1152px;
+  }
+}

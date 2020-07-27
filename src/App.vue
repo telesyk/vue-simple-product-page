@@ -3,13 +3,14 @@
     <Navbar
       :logoSrc="navbar.logo"
       :logoUrl="navbar.url"
+      :cartCount="onCart"
     ></Navbar>
 
     <section class="section">
       <div class="container">
       
         <article class="columns">
-          <div class="column product-media">
+          <div class="column is-one-third product-media">
             <ProductMedia
               :imageSrc="image"
             ></ProductMedia>
@@ -31,6 +32,7 @@
               :onSaleBoolean="onSale"
               @handleProductIncrease="productIncrease"
               @handleProductDecrease="productDecrease"
+              @handleAddProduct="addProductToCart"
             ></ProductContent>
           </div>
         </article>
@@ -60,7 +62,9 @@ export default {
         logo: 'https://bulma.io/images/bulma-logo.png',
         url: 'https://bulma.io',
       },
+
       cart: [],
+      onCart: 0,
       title: 'Socks',
       description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.',
       selectedVariant: 0,
@@ -157,6 +161,11 @@ export default {
       if (this.cart.length != 0) {
         this.cart.pop(id);
       }
+    },
+
+    addProductToCart() {
+      this.onCart += this.cart.length;
+      // alert('This Socks were added to Cart');
     },
 
     // updateProduct(event) {

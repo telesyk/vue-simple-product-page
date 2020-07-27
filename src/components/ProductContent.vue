@@ -181,8 +181,8 @@ export default {
     },
 
     handleAddProduct() {
-      alert('Product added to Cart');
-    }
+      this.$emit('handleAddProduct');
+    },
   },
 }
 </script>
